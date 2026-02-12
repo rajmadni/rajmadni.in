@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madni Raj // Developer & Designer</title>
+    
+    <!-- SEO & Social Media Meta Tags -->
+    <meta name="description" content="Portfolio of Raj Madni, a passionate Frontend Developer and Graphics Designer creating user-friendly digital experiences.">
+    <meta name="author" content="Raj Madni">
+    <meta property="og:title" content="Raj Madni - Web Development Portfolio" />
+    <meta property="og:description" content="A personal portfolio showcasing my projects and skills in web development." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://juned-bhulecha.github.io/rajmadni" />
+    <meta property="og:image" content="https://juned-bhulecha.github.io/web.png" />
+    <meta name="google-site-verification" content="Fj4LVmIaOPQ3BRH122dlFPRqy9AlDkXl4oVdMquowOk" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS & Tailwind Config -->
+    <style>
+        /* Custom Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap');
+        
+        body {
+            font-family: 'Fira Code', monospace;
+            background-color: #010101;
+            color: #00FF41; /* Neon Green */
+            overflow-x: hidden;
+            text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+        }
+
+        /* Scanlines Background Effect */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(
+                to bottom,
+                rgba(18, 16, 16, 0) 50%,
+                rgba(0, 0, 0, 0.25) 50%
+            );
+            background-size: 100% 4px;
+            animation: scan 10s linear infinite;
+        }
+
+        @keyframes scan {
+            from { background-position: 0 0; }
+            to { background-position: 0 -100px; }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #010101; }
+        ::-webkit-scrollbar-thumb { background: #008F11; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00FF41; }
+
+        /* Animation for revealing elements on scroll */
+        .reveal {
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+        .reveal.active {
+            opacity: 1;
+        }
+        
+        /* Blinking Cursor for Typewriter */
+        .typewriter-text::after {
+            content: '_';
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Glitch effect on hover */
+        .glitch-hover {
+            position: relative;
+            display: inline-block;
+        }
+        .glitch-hover:hover::before, .glitch-hover:hover::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #010101;
+            overflow: hidden;
+        }
+        .glitch-hover:hover::before {
+            left: 2px;
+            text-shadow: -2px 0 #ff00c1;
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+        }
+        .glitch-hover:hover::after {
+            left: -2px;
+            text-shadow: -2px 0 #00fff9, 2px 2px #ff00c1;
+            animation: glitch-anim-2 2s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim-1 { 0% { clip-path: inset(10% 0 80% 0); } 100% { clip-path: inset(40% 0 10% 0); } }
+        @keyframes glitch-anim-2 { 0% { clip-path: inset(70% 0 20% 0); } 100% { clip-path: inset(10% 0 60% 0); } }
+
+        /* Background canvas for animated neon particles */
+        #bg-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+            display: block;
+        }
+
+        /* Subtle color wash overlay to blend with scanlines */
+        .neon-wash {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: radial-gradient(ellipse at center, rgba(0,255,65,0.03) 0%, rgba(0,0,0,0.6) 50%);
+            mix-blend-mode: screen;
+            pointer-events: none;
+            animation: wash-move 12s ease-in-out infinite;
+        }
+
+        @keyframes wash-move {
+            0% { transform: scale(1) translateY(0); }
+            50% { transform: scale(1.02) translateY(-20px); }
+            100% { transform: scale(1) translateY(0); }
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+    
+    <div class="scanlines"></div>
+    <canvas id="bg-canvas"></canvas>
+    <div class="neon-wash" aria-hidden="true"></div>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300" id="header">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white">>&nbsp;MR<span class="text-green-400">_</span></a>
+            <div class="hidden md:flex space-x-6 items-center text-sm">
+                <a href="#about" class="text-green-400 hover:bg-green-400 hover:text-black px-2 transition-colors duration-300">About</a>
+                <a href="#education" class="text-green-400 hover:bg-green-400 hover:text-black px-2 transition-colors duration-300">Education</a>
+                <a href="#skills" class="text-green-400 hover:bg-green-400 hover:text-black px-2 transition-colors duration-300">Skills</a>
+                <a href="#projects" class="text-green-400 hover:bg-green-400 hover:text-black px-2 transition-colors duration-300">Projects</a>
+                <a href="#contact" class="text-green-400 hover:bg-green-400 hover:text-black px-2 transition-colors duration-300">Contact</a>
+                <a href="resume.pdf" target="_blank" class="ml-4 px-4 py-2 bg-green-400 text-black font-semibold rounded-sm hover:opacity-90 transition-colors duration-200">View Resume</a>
+            </div>
+            <button id="menu-btn" class="md:hidden focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black/90 backdrop-blur-sm border-t border-green-500/20">
+            <a href="#about" class="block py-3 px-6 text-center text-green-400 hover:bg-green-400 hover:text-black transition-colors duration-300">About</a>
+            <a href="#education" class="block py-3 px-6 text-center text-green-400 hover:bg-green-400 hover:text-black transition-colors duration-300">Education</a>
+            <a href="#skills" class="block py-3 px-6 text-center text-green-400 hover:bg-green-400 hover:text-black transition-colors duration-300">Skills</a>
+            <a href="#projects" class="block py-3 px-6 text-center text-green-400 hover:bg-green-400 hover:text-black transition-colors duration-300">Projects</a>
+            <a href="#contact" class="block py-3 px-6 text-center text-green-400 hover:bg-green-400 hover:text-black transition-colors duration-300">Contact</a>
+            <a href="resume.pdf" target="_blank" class="block py-3 px-6 text-center bg-green-400 text-black font-semibold transition-colors duration-200">View Resume</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 relative z-10">
+
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center">
+            <div class="w-full max-w-4xl">
+                <p class="text-green-400 text-lg mb-4 reveal" data-reveal-delay="100">C:\Users\Madni> init</p>
+                <h1 id="typewriter-h1" class="text-4xl sm:text-6xl md:text-7xl font-bold text-slate-100 reveal" data-reveal-delay="200"></h1>
+                <h2 id="typewriter-h2" class="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-400 mt-2 reveal" data-reveal-delay="300"></h2>
+                
+                <div class="mt-10 reveal" data-reveal-delay="400">
+                    <a href="#projects" class="px-6 py-3 bg-green-500/10 text-green-400 border border-green-400 rounded-none hover:bg-green-400 hover:text-black transition-all duration-300 text-lg font-semibold glitch-hover" data-text="Execute Projects">
+                        Execute Projects
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-24">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <div class="relative w-full max-w-sm mx-auto">
+                        <img src="img.jpg" alt="Raj Madni" class="relative w-full h-auto object-cover border-2 border-green-400/50 p-1" style="filter: grayscale(100%) contrast(120%);">
+                        <div class="absolute -inset-2 border-2 border-green-400/20 animate-pulse"></div>
+                    </div>
+                </div>
+                <div class="reveal" data-reveal-delay="200">
+                    <h2 class="text-3xl font-bold mb-6 text-slate-100">[ About_Me ]</h2>
+                    <div class="space-y-4 text-slate-300 text-base">
+                        <p>> Hello! I'm Madni, a developer and designer with a passion for creating things that live on the internet.</p>
+                        <p>> My journey into tech is driven by a love for blending clean, efficient code with compelling visual design to build beautiful and functional applications.</p>
+                        <p>> Currently pursuing an MCA, I'm always learning and exploring new technologies to push the boundaries of what's possible.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Education Section -->
+        <section id="education" class="py-24">
+             <div class="max-w-4xl mx-auto px-4 md:px-6">
+                <h2 class="text-3xl font-bold text-center mb-12 reveal text-slate-100">[ Education_History ]</h2>
+                <div class="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+                    <!-- MCA Card -->
+                    <div class="reveal p-6 border border-green-400/20 bg-black/20 hover:border-green-400/60 transition-colors">
+                        <h3 class="text-xl font-semibold text-green-400">Master of Computer Applications</h3>
+                        <p class="text-slate-300 mt-1">CVM University</p>
+                        <p class="text-gray-400 text-sm mt-1">2024 – 2026</p>
+                    </div>
+                    <!-- BCA Card -->
+                    <div class="reveal p-6 border border-green-400/20 bg-black/20 hover:border-green-400/60 transition-colors">
+                        <h3 class="text-xl font-semibold text-green-400">Bachelor of Computer Applications</h3>
+                        <p class="text-slate-300 mt-1">Sardar Patel University</p>
+                        <p class="text-gray-400 text-sm mt-1">2022 – 2024</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-24">
+            <h2 class="text-3xl font-bold text-center mb-12 reveal text-slate-100">[ Skillset ]</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-center max-w-4xl mx-auto">
+                <div class="reveal p-4 border border-green-400/20 bg-black/20 flex flex-col items-center justify-center space-y-2 aspect-square hover:bg-green-400/10 transition-colors">
+                    <i class="fab fa-html5 text-5xl text-green-400"></i><span class="text-gray-300 font-medium text-sm">HTML5</span>
+                </div>
+                <div class="reveal p-4 border border-green-400/20 bg-black/20 flex flex-col items-center justify-center space-y-2 aspect-square hover:bg-green-400/10 transition-colors">
+                    <i class="fab fa-css3-alt text-5xl text-green-400"></i><span class="text-gray-300 font-medium text-sm">CSS3</span>
+                </div>
+                <div class="reveal p-4 border border-green-400/20 bg-black/20 flex flex-col items-center justify-center space-y-2 aspect-square hover:bg-green-400/10 transition-colors">
+                    <i class="fab fa-js-square text-5xl text-green-400"></i><span class="text-gray-300 font-medium text-sm">JavaScript</span>
+                </div>
+                <div class="reveal p-4 border border-green-400/20 bg-black/20 flex flex-col items-center justify-center space-y-2 aspect-square hover:bg-green-400/10 transition-colors">
+                    <span class="text-4xl text-green-400 font-semibold">TS</span><span class="text-gray-300 font-medium text-sm">TypeScript</span>
+                </div>
+                <div class="reveal p-4 border border-green-400/20 bg-black/20 flex flex-col items-center justify-center space-y-2 aspect-square hover:bg-green-400/10 transition-colors">
+                    <i class="fab fa-react text-5xl text-green-400"></i><span class="text-gray-300 font-medium text-sm">React</span>
+                </div>
+                <div class="reveal p-4 border border-green-400/20 bg-black/20 flex flex-col items-center justify-center space-y-2 aspect-square hover:bg-green-400/10 transition-colors">
+                    <span class="text-4xl text-green-400 font-semibold">Node</span><span class="text-gray-300 font-medium text-sm">Node.js</span>
+                </div>
+                <div class="reveal p-4 border border-green-400/20 bg-black/20 flex flex-col items-center justify-center space-y-2 aspect-square hover:bg-green-400/10 transition-colors">
+                    <span class="text-4xl text-green-400 font-semibold">TW</span><span class="text-gray-300 font-medium text-sm">Tailwind CSS</span>
+                </div>
+                <div class="reveal p-4 border border-green-400/20 bg-black/20 flex flex-col items-center justify-center space-y-2 aspect-square hover:bg-green-400/10 transition-colors">
+                    <i class="fab fa-git-alt text-5xl text-green-400"></i><span class="text-gray-300 font-medium text-sm">Git</span>
+                </div>
+                <div class="reveal p-4 border border-green-400/20 bg-black/20 flex flex-col items-center justify-center space-y-2 aspect-square hover:bg-green-400/10 transition-colors">
+                    <i class="fab fa-python text-5xl text-green-400"></i><span class="text-gray-300 font-medium text-sm">Python</span>
+                </div>
+                <div class="reveal p-4 border border-green-400/20 bg-black/20 flex flex-col items-center justify-center space-y-2 aspect-square hover:bg-green-400/10 transition-colors">
+                    <span class="text-4xl text-green-400 font-semibold">DJ</span><span class="text-gray-300 font-medium text-sm">Django</span>
+                </div>
+                <div class="reveal p-4 border border-green-400/20 bg-black/20 flex flex-col items-center justify-center space-y-2 aspect-square hover:bg-green-400/10 transition-colors">
+                    <i class="fab fa-bootstrap text-5xl text-green-400"></i><span class="text-gray-300 font-medium text-sm">Bootstrap</span>
+                </div>
+                <div class="reveal p-4 border border-green-400/20 bg-black/20 flex flex-col items-center justify-center space-y-2 aspect-square hover:bg-green-400/10 transition-colors">
+                    <i class="fas fa-database text-5xl text-green-400"></i><span class="text-gray-300 font-medium text-sm">MongoDB</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-24">
+            <h2 class="text-3xl font-bold text-center mb-12 reveal text-slate-100">[ My_Work ]</h2>
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Project 1 -->
+                <a href="" target="_blank" class="block reveal rounded-none border-2 border-green-400/30 bg-black/30 group relative p-6 hover:border-green-400 transition-colors">
+                    <h3 class="text-2xl font-semibold text-green-400">Watch Shop E-commerce</h3>
+                    <p class="text-slate-300 mt-2">A full-featured e-commerce site built with .NET (C#) and SQL Server.</p>
+                    <div class="flex flex-wrap gap-2 mt-4 text-xs text-green-400/70">
+                        <span>.NET</span><span>C#</span><span>SQL Server</span>
+                    </div>
+                </a>
+                <!-- Project 2 -->
+                <a href="" target="_blank" class="block reveal rounded-none border-2 border-green-400/30 bg-black/30 group relative p-6 hover:border-green-400 transition-colors">
+                    <h3 class="text-2xl font-semibold text-green-400">Library Management System</h3>
+                    <p class="text-slate-300 mt-2">A web app to manage books and members, built with PHP & MySQL.</p>
+                    <div class="flex flex-wrap gap-2 mt-4 text-xs text-green-400/70">
+                        <span>PHP</span><span>MySQL</span><span>HTML/CSS</span>
+                    </div>
+                </a>
+                <!-- Project 3 -->
+                <a href="" target="_blank" class="block reveal rounded-none border-2 border-green-400/30 bg-black/30 group relative p-6 hover:border-green-400 transition-colors">
+                    <h3 class="text-2xl font-semibold text-green-400">Online Voting System</h3>
+                    <p class="text-slate-300 mt-2">A web app to manage books and members, built with PHP & MySQL.</p>
+                    <div class="flex flex-wrap gap-2 mt-4 text-xs text-green-400/70">
+                        <span>PHP</span><span>MySQL</span><span>HTML/CSS</span>
+                    </div>
+                </a>
+                <!-- Project 4 -->
+                <a href="" target="_blank" class="block reveal rounded-none border-2 border-green-400/30 bg-black/30 group relative p-6 hover:border-green-400 transition-colors">
+                    <h3 class="text-2xl font-semibold text-green-400">Online Book Store</h3>
+                    <p class="text-slate-300 mt-2">A web app to manage books and members, built with Bootstrap & Tailwind.</p>
+                    <div class="flex flex-wrap gap-2 mt-4 text-xs text-green-400/70">
+                        <span>Bootstrap</span><span>Tailwind</span><span>HTML/CSS</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 text-center">
+            <div class="max-w-xl mx-auto reveal">
+                <h2 class="text-3xl font-bold text-slate-100">[ Contact ]</h2>
+                <p class="text-gray-400 mt-4 mb-8 text-lg">
+                    My inbox is always open. Whether you have a question or just want to say hi, I’ll try my best to get back to you!
+                </p>
+                <a href="mailto:rajmadni133@gmail.com" class="inline-block px-8 py-4 text-green-400 border border-green-400 hover:bg-green-400 hover:text-black transition-all duration-300 text-lg font-semibold glitch-hover" data-text="Say Hello">
+                    Say Hello
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8">
+        <div class="flex justify-center items-center space-x-6 mb-4">
+            <a href="https://github.com/rajmadni/" target="_blank" class="text-gray-500 hover:text-green-400 transition-transform hover:-translate-y-1 duration-300"><i class="fab fa-github fa-lg"></i></a>
+            <a href="https://www.linkedin.com/in/raj-madni/" target="_blank" class="text-gray-500 hover:text-green-400 transition-transform hover:-translate-y-1 duration-300"><i class="fab fa-linkedin-in fa-lg"></i></a>
+            <a href="https://www.instagram.com/madni_raj133/" target="_blank" class="text-gray-500 hover:text-green-400 transition-transform hover:-translate-y-1 duration-300"><i class="fab fa-instagram fa-lg"></i></a>
+        </div>
+        <p class="text-center text-gray-500 text-sm">
+            Designed & Built by Raj Madni
+        </p>
+    </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Mobile Menu Toggle ---
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileNavLinks = mobileMenu.querySelectorAll('a');
+
+                // --- Animated Gradient Waves Background (canvas) ---
+                const canvas = document.getElementById('bg-canvas');
+                const ctx = canvas && canvas.getContext ? canvas.getContext('2d') : null;
+
+                function resizeCanvas() {
+                    if (!canvas || !ctx) return;
+                    const dpr = window.devicePixelRatio || 1;
+                    canvas.width = Math.max(1, Math.floor(window.innerWidth * dpr));
+                    canvas.height = Math.max(1, Math.floor(window.innerHeight * dpr));
+                    canvas.style.width = window.innerWidth + 'px';
+                    canvas.style.height = window.innerHeight + 'px';
+                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                }
+
+                const waves = [
+                    { amp: 120, freq: 0.0065, speed: 0.0009, phase: 0, alpha: 0.06 },
+                    { amp: 80,  freq: 0.009,  speed: 0.0012, phase: 1.2, alpha: 0.08 },
+                    { amp: 45,  freq: 0.015, speed: 0.0018, phase: 2.0, alpha: 0.12 },
+                    { amp: 25,  freq: 0.03,  speed: 0.0028, phase: 4.0, alpha: 0.16 }
+                ];
+
+                let startTime = performance.now();
+
+                function drawWaves(now) {
+                    if (!ctx) return;
+                    const t = now - startTime;
+                    const w = canvas.width / (window.devicePixelRatio || 1);
+                    const h = canvas.height / (window.devicePixelRatio || 1);
+
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.globalCompositeOperation = 'lighter';
+
+                    // soft background tint
+                    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    for (let i = 0; i < waves.length; i++) {
+                        const wave = waves[i];
+                        ctx.beginPath();
+                        const centerY = h * (0.45 + i * 0.04);
+                        ctx.moveTo(0, h);
+                        for (let x = 0; x <= w; x += 6) {
+                            const y = centerY + Math.sin((x * wave.freq) + (t * wave.speed) + wave.phase) * wave.amp;
+                            ctx.lineTo(x, y);
+                        }
+                        ctx.lineTo(w, h);
+                        ctx.closePath();
+
+                        // gradient per wave (neon green hues)
+                        const g = ctx.createLinearGradient(0, centerY - wave.amp, 0, centerY + wave.amp);
+                        g.addColorStop(0, `rgba(0,255,65,${wave.alpha * 0.9})`);
+                        g.addColorStop(0.5, `rgba(0,200,80,${wave.alpha})`);
+                        g.addColorStop(1, `rgba(0,255,65,0.0)`);
+
+                        ctx.fillStyle = g;
+                        ctx.filter = 'blur(14px)';
+                        ctx.fill();
+                        ctx.filter = 'none';
+                    }
+
+                    requestAnimationFrame(drawWaves);
+                }
+
+                if (canvas && ctx) {
+                    resizeCanvas();
+                    requestAnimationFrame(drawWaves);
+                    let resizeTimer = null;
+                    window.addEventListener('resize', () => {
+                        // debounce resize
+                        clearTimeout(resizeTimer);
+                        resizeTimer = setTimeout(() => {
+                            if (ctx) ctx.setTransform(1, 0, 0, 1, 0, 0);
+                            resizeCanvas();
+                        }, 120);
+                    });
+                }
+
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // --- Header Scroll Effect ---
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('bg-black/80', 'backdrop-blur-sm');
+                } else {
+                    header.classList.remove('bg-black/80', 'backdrop-blur-sm');
+                }
+            });
+
+            // --- Intersection Observer for Repeating Animations ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    let delay = parseInt(entry.target.getAttribute('data-reveal-delay')) || 0;
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('active');
+                        }, delay);
+                    } else {
+                        entry.target.classList.remove('active');
+                    }
+                });
+            }, { 
+                threshold: 0.1 
+            });
+            
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+
+            // --- Typewriter Effect ---
+            function typeWriter(element, text, i, callback) {
+                if (i < text.length) {
+                    element.innerHTML = text.substring(0, i + 1) + '<span class="animate-ping">_</span>';
+                    setTimeout(() => {
+                        typeWriter(element, text, i + 1, callback);
+                    }, 100);
+                } else {
+                    element.innerHTML = text; // Remove cursor at the end
+                    if (callback) callback();
+                }
+            }
+
+            function startTyping() {
+                const h1 = document.getElementById('typewriter-h1');
+                const h2 = document.getElementById('typewriter-h2');
+                const text1 = "Raj Madni";
+                const text2 = "> Frontend Developer";
+
+                if (h1 && h2) {
+                    typeWriter(h1, text1, 0, () => {
+                        typeWriter(h2, text2, 0);
+                    });
+                }
+            }
+
+            // Start animations on load
+            window.addEventListener('load', startTyping);
+        });
+    </script>
+</body>
+</html>
